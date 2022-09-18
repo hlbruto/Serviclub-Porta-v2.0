@@ -1,0 +1,74 @@
+// app global css in SCSS form
+.title {
+  margin-bottom: 70px;
+}
+footer.copyright {
+  padding: 1rem 0;
+  /*background: var(--secondary);*/
+  background-color: #232b38;
+  /*color: var(--pure);*/
+  color: #fff;
+  text-align: center;
+  font-size: 0.75rem;
+}
+footer.copyright a {
+  /*color:var(--jovenclub);*/
+  text-decoration: none;
+}
+footer .box {
+  text-align: left;
+  margin-right: 0;
+  margin-bottom: 0px;
+  text-align: center;
+}
+.encabezado {
+  font-size: 18px;
+  margin: 0 0 16px;
+  padding: 0 0 16px;
+  line-height: 0px;
+  border-bottom: 1px solid #0199ff;
+  width: 90%;
+}
+ul {
+  padding: 0px;
+}
+ul li {
+  list-style: none;
+  margin: 0 0 16px;
+  width: 90%;
+}
+ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+p {
+  width: 90%;
+}
+.contct-icon {
+  width: 44px;
+  height: 44px;
+  margin-right: 1rem;
+}
+section.contact-us .contact-info-wrapper {
+  padding: 4rem 0;
+  flex: 1;
+}
+section.contact-us .contact-info {
+  display: flex;
+  justify-content: center;
+}
+section.contact-us {
+  height: 500px;
+}
+section.contact-us .map {
+  flex: 1;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  margin-bottom: 0px;
+}
+q-card {
+  margin-bottom: 20px !important;
+}
+.q-corousel__navigation-i {
+  margin-top: 30px;
+}
