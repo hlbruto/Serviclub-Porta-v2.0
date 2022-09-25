@@ -35,6 +35,7 @@ export default () => {
       identifier: form.value.email,
       password: form.value.password
     })
+    console.log(data)
 
     $q.localStorage.set('jwt', data.jwt) // para guardar el token
 
@@ -43,6 +44,7 @@ export default () => {
         Authorization: `Bearer ${data.jwt}`
       }
     }
+    $q.localStorage.set('authorization', authorization.value) // para guardar la cabecera
 
     llenarDatosUser()
   }
@@ -52,10 +54,10 @@ export default () => {
       await api
         .get('/api/users/me?populate=*', authorization.value)
         .then((res) => {
-          /* $q.localStorage.set('user', res.data)
-          $q.localStorage.set('role', res.data.role.name) */
+          $q.localStorage.set('user', res.data)
+          $q.localStorage.set('role', res.data.role.name)
 
-          console.log(res.data)
+          console.log('pop', res.data)
           router.push({ path: 'dashboard' })
         })
     } catch (error) {

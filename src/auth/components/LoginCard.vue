@@ -15,7 +15,7 @@ const {
 </script>
 
 <template>
-  <q-card>
+  <q-card style="width:400px">
     <q-card-section class="text-center">
       <!-- Login Form -->
       <AuthLoginForm

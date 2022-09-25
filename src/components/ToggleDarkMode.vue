@@ -3,18 +3,10 @@
     <q-toggle
       v-model="darkMode"
       color="black"
-      size="xs"
+      size="sm"
       checked-icon="mdi-weather-night"
       unchecked-icon="mdi-white-balance-sunny"
-      v-if="$q.platform.is.desktop"
-    />
-    <q-toggle
-      v-model="darkMode"
-      color="black"
-      size="xs"
-      checked-icon="mdi-weather-night"
-      unchecked-icon="mdi-white-balance-sunny"
-      v-else
+      label="Cambiar"
     />
   </div>
 </template>

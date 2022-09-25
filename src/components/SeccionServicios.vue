@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section
+    <div
       class="servicios full-width q-pb-xl"
       style="background-color: #f0f0f0 !important"
     >
@@ -10,338 +10,142 @@
       >
         <div>
           <div class="text-h4 text-black text-bold">Nuestros Servicios</div>
-          <q-item-label caption class="text-black">
-            Algunos de los Servicios que ofrecemos <br>
-            <a href="#/servicios">Ver todos</a>
+          <q-item-label class="text-black">
+            Algunos de los Servicios que ofrecemos <br><br>
+            <a href="#/servicios">VER TODOS</a>
           </q-item-label>
         </div>
       </div>
+
       <div paddind style="padding: 0 100px">
         <div
-          class="row q-gutter-x-lg"
-          style="margin-bottom: 100px; margin-top: 30px"
+          class="row q-gutter-x-lg justify-center"
+          style="margin-top: 30px"
         >
-          <div class="col">
+          <div v-for="(el, index) in array1" :key="index">
             <q-card class="my-card text-center">
-            <q-card-section avatar>
-              <q-img
-                class="avatar"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/pc01.svg"
-              ></q-img></q-card-section>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm">Alquiler de computadora</div>
-                <div class="text-body1">
+              <q-card-section>
+                <q-img
+                  class="icon"
+                  :src="'portada/' + el.src"
+                />
+              </q-card-section>
+              <q-card-section>
+                <div class="text-h6 q-pb-sm text-primary text-titulo"
+                    v-if="index%2 == 0"
+                >
+                  {{ el.title }}
+                </div>
+                <div class="text-h6 q-pb-sm text-dark text-titulo" v-else>{{ el.title }}</div>
+                <div class="text-body1text-descripcion">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Alias repellat officiis aliquid, quia doloribus quibusdam!
                 </div>
               </q-card-section>
 
               <q-card-actions vertical>
+                 <q-btn
+                  no-caps
+                  class="text-white text-body1 q-px-lg bg-primary"
+                  flat
+                  v-if="index%2 != 0"
+                >
+                  Leer Más
+                </q-btn>
                 <q-btn
                   no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #232b38"
+                  class="text-white text-body1 q-px-lg bg-dark"
                   flat
-                  >Leer Más</q-btn
+                  v-else
                 >
+                  Leer Más
+                </q-btn>
               </q-card-actions>
             </q-card>
-          </div>
-
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/cursos01.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm" style="color: #0d47a1">
-                  Servicio de cursos
-                </div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #0d47a1"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/asist.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm">Asistencia informática</div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #232b38"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/recupere01.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm" style="color: #0d47a1">
-                  Recuperación de información digital
-                </div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #0d47a1"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-        </div>
-        <div class="row q-gutter-x-lg q-mb-xl">
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/scanner01.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm">
-                  Digitalización de imágenes y documentos
-                </div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #232b38"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/paint01.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm" style="color: #0d47a1">
-                  Restauración digital de fotos y documentos
-                </div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #0d47a1"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/videocall01.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm">Videollamada</div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #232b38"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col">
-            <q-card class="my-card text-center">
-              <q-img
-                class="icon"
-                style="
-                  /*position: absolute;*/
-                  height: 90.7px;
-                  width: 90.7px;
-                  top: -45px;
-                  /*left: 50%;*/
-                "
-                src="~assets/servicios01.svg"
-              ></q-img>
-              <q-card-section style="height: 200px; top: -30px">
-                <div class="text-h6 q-pb-sm" style="color: #0d47a1">
-                  Servicios profesionales
-                </div>
-                <div class="text-body1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg"
-                  style="background-color: #0d47a1"
-                  flat
-                  >Leer Más</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </div>
-        </div>
-        <!-- <div class="flex flex-center">
-          <q-btn
-            no-caps
-            rounded
-            class="self-end text-body1 q-px-lg"
-            color="primary"
-            label="Ver Más"
-          />
-        </div> -->
-
-        <!--q-carousel
-          v-model="slide"
-          arrows
-          navigation
-          animated
-          transition-next="slide-left"
-          transition-prev="slide-right"
-          swipeable
-          infinite
-          control-type="outline"
-          control-color="black"
-        >
-          <q-carousel-slide
-            name="1"
-            style="background-color: #f0f0f0 !important"
-          >
-            <div style="background-color: red !important">
-              <q-card style="width: 33% !important">
-                <q-card-section>
-                  <div class="text-h6">Some Text</div>
-                </q-card-section>
-                <q-card-section>
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit feugiat
-                </q-card-section>
-              </q-card>
+            <!-- <TarjetaServicio /> -->
             </div>
-          </q-carousel-slide>
-          <q-carousel-slide
-            name="2"
-            style="background-color: #f0f0f0 !important"
-            >two</q-carousel-slide
-          >
-          <q-carousel-slide
-            name="3"
-            style="background-color: #f0f0f0 !important"
-            >three</q-carousel-slide
-          >
-        </q-carousel-->
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
+
+<script setup>
+// import TarjetaServicio from 'components/TarjetaServicio'
+
+const array1 = [
+  {
+    src: 'pc01.svg',
+    title: 'Alquiler de computadora',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
+    color: 'primary'
+  },
+  {
+    src: 'paint01.svg',
+    title: 'Restauración digital de fotos y documentos',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
+    color: 'dark'
+  },
+  {
+    src: 'scanner01.svg',
+    title: 'Digitalización de imágenes y documentos',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
+    color: 'primary'
+  },
+  {
+    src: 'cursos01.svg',
+    title: 'Servicio de cursos',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
+    color: 'dark'
+  },
+  {
+    src: 'videocall01.svg',
+    title: 'Videollamada',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
+    color: 'primary'
+  },
+  {
+    src: 'servicios01.svg',
+    title: 'Servicios profesionales',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
+    color: 'dark'
+  }
+]
+
+// const ind = 0
+</script>
+
+<style lang="scss" scoped>
+.my-card{
+width: 240px;
+margin-bottom: 80px;
+}
+
+.icon{
+position: absolute;
+height: 90.7px;
+width: 90.7px;
+top: -45px;
+right: 30%;
+left: 30%;
+}
+
+.text-titulo {
+font-size: 10pt;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 1;
+line-clamp: 1;
+overflow: hidden;
+text-align: center;
+}
+
+.text-descripcion {
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 4;
+line-clamp: 3;
+overflow: hidden;
+text-align: center;
+}
+</style>

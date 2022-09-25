@@ -8,6 +8,7 @@ export default boot(({ router }) => {
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'inicio', component: () => import('pages/IndexPage.vue') },
       { path: 'servicios', component: () => import('pages/ServiciosPage.vue') },
+      { path: 'servicio/:id', component: () => import('pages/UnServicioPage.vue') },
       { path: 'dashboard', component: () => import('pages/UserDashboard.vue') },
       { path: 'perfil', component: () => import('src/pages/UserProfile.vue') }
     ]

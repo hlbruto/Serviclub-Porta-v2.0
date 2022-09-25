@@ -12,6 +12,7 @@ const { loading, onLogoutClicked } = useLogout()
     <q-item-section side>
       <q-icon
         v-if="!loading"
+        size="xs"
         name="logout"
       />
       <q-spinner
@@ -20,5 +21,6 @@ const { loading, onLogoutClicked } = useLogout()
         color="primary"
       />
     </q-item-section>
+    <q-item-section>Salir</q-item-section>
   </q-item>
 </template>

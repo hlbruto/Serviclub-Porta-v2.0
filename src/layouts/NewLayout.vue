@@ -27,15 +27,13 @@
 
           <div class="flex items-center">
             <img
-              src="../assets/logo01.png"
+              src="nuestro-logo.png"
               style="height: 30px; margin-right: 5px"
             />
             <div class="text-h5">ServiClub</div>
           </div>
 
           <q-space></q-space>
-
-          <ToggleDarkMode />
 
           <q-btn
             icon="home"
@@ -52,28 +50,43 @@
           />
 
           <q-btn round icon="person" color="primary" dense>
-            <q-menu auto-close>
-              <q-list dense>
-                <q-item clickable to="/dashboard">
-                  <q-item-section>
-                    Mis Pedidos
+            <q-menu auto-close
+                    transition-show="scale"
+                    transition-hide="scale"
+            >
+              <q-list>
+                <q-item><ToggleDarkMode /></q-item>
+                <q-item
+                  clickable
+                  to="/dashboard"
+                >
+                  <q-item-section side>
+                    <q-icon
+                      size="xs"
+                      name="dashboard"
+                    />
                   </q-item-section>
+                  <q-item-section>Mis Pedidos</q-item-section>
                 </q-item>
-
-                <q-item clickable to="/perfil">
-                  <q-item-section>
-                    Perfil
+                <q-item
+                  clickable
+                  to="/perfil"
+                >
+                  <q-item-section side>
+                    <q-icon
+                      size="xs"
+                      name="settings"
+                    />
                   </q-item-section>
+                  <q-item-section>Perfil</q-item-section>
                 </q-item>
-
-                <q-item clickable to="/inicio">
-                  <q-item-section>
-                    Salir
-                  </q-item-section>
-                </q-item>
+                <q-separator />
+                <AuthLogoutItem />
               </q-list>
             </q-menu>
           </q-btn>
+
+          <q-btn round icon="login" color="primary" dense to="/login" />
         </q-toolbar>
       </q-header>
 
@@ -99,12 +112,6 @@
             v-bind="link"
           />
         </q-list>
-
-        <div>
-          <small class="row justify-center text-grey-7">
-            {{ formattedString }}
-          </small>
-        </div>
       </q-drawer>
     </div>
 
@@ -116,13 +123,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useQuasar, date } from 'quasar'
+import { useQuasar } from 'quasar'
 import ToggleDarkMode from 'src/components/ToggleDarkMode.vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import AuthLogoutItem from 'src/auth/components/AccountMenu/LogoutItem.vue'
 
 const $q = useQuasar()
-const timeStamp = Date.now()
-const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD | HH:mm')
 
 const essentialLinks = [
   {

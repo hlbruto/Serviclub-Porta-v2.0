@@ -1,42 +1,69 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
-// import { useQuasar, QSpinnerGears } from 'quasar'
-
-// const $q = useQuasar()
 
 export const useServiciosStore = defineStore('servicios', {
   state: () => ({
-    servicios: ['qw', 'sad']
+    servicios: [],
+    servCasa: [],
+    servRed: [],
+    servInst: [],
+    servicio: {},
+    sigServicio: {}
   }),
 
   getters: {
-    listServicios: (state) => state.servicios
+    serviciosArray: (state) => state.servicios,
+    serviciosCasa: (state) => state.servCasa,
+    serviciosRed: (state) => state.servRed,
+    serviciosInstalacion: (state) => state.servInst,
+    unServicio: (state) => state.servicio,
+    siguienteServicio: (state) => state.sigServicio
   },
 
   actions: {
     async listarServicios () {
-      /* $q.loading.show({
-        spinner: QSpinnerGears,
-        spinnerColor: 'primary',
-        messageColor: 'black',
-        backgroundColor: 'blue',
-        message: 'Cargando los servicios...'
-      })
- */
       try {
         await api.get('/api/servicios').then((res) => {
-          console.log(res)
-          this.servicios = res.data
-          // $q.loading.hide()
+          this.servicios = res.data.data
+          this.clasificarServicios()
         })
-      } catch (error) {
-        /* $q.loading.hide()
-        $q.notify({
-          type: 'warning',
-          message: 'Ha ocurrido un error. Contacte al administrador.'
-        }) */
+      } catch (error) {}
+    },
+
+    clasificarServicios () {
+      const element = []
+      const element2 = []
+      const element3 = []
+      for (let index = 0; index < this.servicios.length; index++) {
+        if (this.servicios[index].attributes.casa === true) {
+          element.push(this.servicios[index])
+        }
+        if (this.servicios[index].attributes.red === true) {
+          element2.push(this.servicios[index])
+        }
+        if (this.servicios[index].attributes.instalacion === true) {
+          element3.push(this.servicios[index])
+        }
       }
-      // this.servicios = ['q', '1']
+      this.servCasa = element
+      this.servRed = element2
+      this.servInst = element3
+    },
+
+    irAlServicio (id) {
+      for (let index = 0; index < this.servicios.length; index++) {
+        if (this.servicios[index].id === id) {
+          this.servicio = this.servicios[index]
+        }
+      }
+    },
+
+    otroServicio (id) {
+      for (let index = 0; index < this.servicios.length; index++) {
+        if (this.servicios[index].id === id) {
+          this.sigServicio = this.servicios[index + 1]
+        }
+      }
     }
   }
 })

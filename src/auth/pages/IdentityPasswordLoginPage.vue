@@ -3,8 +3,8 @@ import AuthLoginCard from 'src/auth/components/LoginCard.vue'
 </script>
 
 <template>
-  <div
-    class="row justify-center"
+  <q-page
+    class="row justify-center my-class"
     style="min-height: 100vh"
     padding
   >
@@ -14,5 +14,12 @@ import AuthLoginCard from 'src/auth/components/LoginCard.vue'
       </h5>
       <AuthLoginCard />
     </div>
-  </div>
+  </q-page>
 </template>
+
+<style scoped>
+.my-class{
+background: linear-gradient(rgba(125, 140, 165, 0.562), rgba(186, 202, 229, 0.418) ), url(Onda.jpeg);
+background-size: cover;
+}
+</style>

@@ -1,5 +1,6 @@
 <script setup>
 import { QInput, QForm } from 'quasar'
+import { ref } from 'vue'
 
 defineProps({
   email: {
@@ -21,6 +22,8 @@ const emit = defineEmits([
   'update:email',
   'update:password'
 ])
+
+const isPwd = ref(false)
 </script>
 
 <template>
@@ -29,25 +32,29 @@ const emit = defineEmits([
     <q-input
       filled
       label="Correo electrónico"
-      hint="Ejemplo: usuario@cubava.cu"
+      hint="De su cuenta Joven Club. Ejemplo: usuario@cubava.cu"
       :model-value="email"
-      :error="!!validationErrors?.['email']"
-      :error-message="validationErrors?.['email']?.[0]"
       class="q-mb-md"
       hide-bottom-space
       @update:model-value="value => emit('update:email', value)"
     />
     <q-input
       filled
-      type="password"
       label="Contraseña"
       :model-value="password"
-      :error="!!validationErrors?.['password']"
-      :error-message="validationErrors?.['password']?.[0]"
+      :type="isPwd ? 'password' : 'text'"
       class="q-mb-sm"
       hide-bottom-space
       @update:model-value="value => emit('update:password', value)"
-    />
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isPwd ? 'visibility_off' : 'visibility'"
+          class="cursor-pointer"
+          @click="isPwd = !isPwd"
+        />
+      </template>
+    </q-input>
     <slot name="bottom" />
   </q-form>
 </template>
