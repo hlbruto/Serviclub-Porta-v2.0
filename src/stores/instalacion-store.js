@@ -1,26 +1,17 @@
 import { defineStore } from 'pinia'
-import { api } from 'src/boot/axios'
+// import { api } from 'src/boot/axios'
 
-export const useServiciosStore = defineStore('servicios', {
+export const useInstalacionesStore = defineStore('instalaciones', {
   state: () => ({
-    servicios: [],
-    servCasa: [],
-    servRed: [],
-    servInst: [],
-    servicio: {},
-    sigServicio: {}
+    instalaciones: []
   }),
 
   getters: {
-    serviciosCasa: (state) => state.servCasa,
-    serviciosRed: (state) => state.servRed,
-    serviciosInstalacion: (state) => state.servInst,
-    unServicio: (state) => state.servicio,
-    siguienteServicio: (state) => state.sigServicio
+    instalacionesArray: (state) => state.instalaciones
   },
 
   actions: {
-    async listarServicios () {
+    /* async listarServicios () {
       try {
         await api.get('/api/servicios').then((res) => {
           this.servicios = res.data.data
@@ -63,6 +54,6 @@ export const useServiciosStore = defineStore('servicios', {
           this.sigServicio = this.servicios[index + 1]
         }
       }
-    }
+    } */
   }
 })

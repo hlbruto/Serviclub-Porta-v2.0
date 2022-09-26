@@ -6,7 +6,7 @@
     >
       <div
         class="row full-width flex flex-center text-center"
-        style="height: 200px"
+        style="height:200px"
       >
         <div>
           <div class="text-h4 text-black text-bold">Nuestros Servicios</div>
@@ -18,134 +18,42 @@
       </div>
 
       <div paddind style="padding: 0 100px">
-        <div
-          class="row q-gutter-x-lg justify-center"
-          style="margin-top: 30px"
-        >
-          <div v-for="(el, index) in array1" :key="index">
-            <q-card class="my-card text-center">
-              <q-card-section>
-                <q-img
-                  class="icon"
-                  :src="'portada/' + el.src"
-                />
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h6 q-pb-sm text-primary text-titulo"
-                    v-if="index%2 == 0"
-                >
-                  {{ el.title }}
-                </div>
-                <div class="text-h6 q-pb-sm text-dark text-titulo" v-else>{{ el.title }}</div>
-                <div class="text-body1text-descripcion">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Alias repellat officiis aliquid, quia doloribus quibusdam!
-                </div>
-              </q-card-section>
-
-              <q-card-actions vertical>
-                 <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg bg-primary"
-                  flat
-                  v-if="index%2 != 0"
-                >
-                  Leer Más
-                </q-btn>
-                <q-btn
-                  no-caps
-                  class="text-white text-body1 q-px-lg bg-dark"
-                  flat
-                  v-else
-                >
-                  Leer Más
-                </q-btn>
-              </q-card-actions>
-            </q-card>
-            <!-- <TarjetaServicio /> -->
+          <div class="row justify-center"
+            style="margin-top:10px"
+            v-if="store.servicios.length !== 0"
+          >
+            <div class="col-4" v-for="(s, index) in store.servicios" :key="s.id">
+              <TarjetaServicio
+                :servicio="s.attributes.servicio"
+                :foto="s.attributes.foto"
+                :descripcion="s.attributes.descripcion"
+                :id="s.id"
+                :color="'primary'"
+                v-if="index%2 == 0"
+              />
+              <TarjetaServicio
+                :servicio="s.attributes.servicio"
+                :foto="s.attributes.foto"
+                :descripcion="s.attributes.descripcion"
+                :id="s.id"
+                :color="'dark'"
+                v-else
+              />
             </div>
-        </div>
+          </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// import TarjetaServicio from 'components/TarjetaServicio'
+import { onBeforeMount } from 'vue'
+import { useServiciosStore } from 'stores/servicios-store'
+import TarjetaServicio from 'components/TarjetaServicio.vue'
 
-const array1 = [
-  {
-    src: 'pc01.svg',
-    title: 'Alquiler de computadora',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
-    color: 'primary'
-  },
-  {
-    src: 'paint01.svg',
-    title: 'Restauración digital de fotos y documentos',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
-    color: 'dark'
-  },
-  {
-    src: 'scanner01.svg',
-    title: 'Digitalización de imágenes y documentos',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
-    color: 'primary'
-  },
-  {
-    src: 'cursos01.svg',
-    title: 'Servicio de cursos',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
-    color: 'dark'
-  },
-  {
-    src: 'videocall01.svg',
-    title: 'Videollamada',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
-    color: 'primary'
-  },
-  {
-    src: 'servicios01.svg',
-    title: 'Servicios profesionales',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!',
-    color: 'dark'
-  }
-]
+const store = useServiciosStore()
 
-// const ind = 0
+onBeforeMount(() => {
+  store.listarServicios()
+})
 </script>
-
-<style lang="scss" scoped>
-.my-card{
-width: 240px;
-margin-bottom: 80px;
-}
-
-.icon{
-position: absolute;
-height: 90.7px;
-width: 90.7px;
-top: -45px;
-right: 30%;
-left: 30%;
-}
-
-.text-titulo {
-font-size: 10pt;
-display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 1;
-line-clamp: 1;
-overflow: hidden;
-text-align: center;
-}
-
-.text-descripcion {
-display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 4;
-line-clamp: 3;
-overflow: hidden;
-text-align: center;
-}
-</style>

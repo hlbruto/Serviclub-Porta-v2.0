@@ -26,7 +26,7 @@
 
             <q-tab-panels v-model="tab">
               <q-tab-panel name="casa">
-                <div class="row justify-start" v-if="store.serviciosCasa.length !== 0">
+                <div class="row justify-center" v-if="store.serviciosCasa.length !== 0">
                   <div v-for="(s, index) in store.serviciosCasa" :key="s.id">
                     <TarjetaServicio
                       :servicio="s.attributes.servicio"
@@ -51,7 +51,7 @@
                 </q-card>
               </q-tab-panel>
               <q-tab-panel name="red">
-                <div class="row justify-start" v-if="store.serviciosRed.length !== 0">
+                <div class="row justify-center" v-if="store.serviciosRed.length !== 0">
                   <div v-for="(s, index) in store.serviciosRed" :key="index">
                     <TarjetaServicio
                       :servicio="s.attributes.servicio"
@@ -76,7 +76,7 @@
                 </q-card>
               </q-tab-panel>
               <q-tab-panel name="instalacion">
-                <div class="row justify-start" v-if="store.serviciosInstalacion.length !== 0">
+                <div class="row justify-center" v-if="store.serviciosInstalacion.length !== 0">
                   <div v-for="(s, index) in store.serviciosInstalacion" :key="index">
                     <TarjetaServicio
                       :servicio="s.attributes.servicio"

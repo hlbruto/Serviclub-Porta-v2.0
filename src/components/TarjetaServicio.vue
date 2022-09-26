@@ -1,22 +1,21 @@
 <template>
   <q-card bordered
-    class="q-mt-xl q-ml-lg q-mr-lg my-card text-center"
-    @click="elegirServicio()"
+    class="q-mt-xl q-ml-lg q-mr-lg my-cardS text-center"
   >
     <q-card-section>
       <q-img
-        class="icon"
+        class="iconS"
         :src="'portada/' + props.foto"
       />
     </q-card-section>
     <q-card-section>
-      <div class="text-h6 q-pb-sm text-primary text-titulo" v-if="color == 'primary'">
+      <div class="text-h6 q-pb-sm text-primary text-tituloS" v-if="color == 'primary'">
         {{ props.servicio }}
       </div>
-      <div class="text-h6 q-pb-sm text-dark text-titulo" v-else>
+      <div class="text-h6 q-pb-sm text-dark text-tituloS" v-else>
         {{ props.servicio }}
       </div>
-      <div class="text-body1text-descripcion">
+      <div class="text-body2 text-descripcionS">
         {{ props.descripcion }}
       </div>
     </q-card-section>
@@ -25,17 +24,19 @@
         no-caps
         class="text-white text-body1 q-px-lg bg-dark"
         flat
+        @click="elegirServicio()"
         v-if="color == 'primary'"
       >
-        Leer Más
+        Solicitar
       </q-btn>
       <q-btn
         no-caps
         class="text-white text-body1 q-px-lg bg-primary"
         flat
+        @click="elegirServicio()"
         v-else
       >
-        Leer Más
+        Solicitar
       </q-btn>
 </q-card-actions>
   </q-card>
@@ -80,40 +81,43 @@ async function elegirServicio () {
 </script>
 
 <style lang="scss">
-.my-card{
-width: 100%;
-margin-bottom: 80px;
+.my-cardS{
+  max-width: 250px;
+  margin-bottom: 80px;
 }
-.my-card:hover {
+
+.my-cardS:hover {
   background: radial-gradient(circle, #e1eaf1 0%, #bcd7f7 100%);
   // border-color: #0a0349;
   // border-width: 0.5pt;
   width: 100%;
 }
-.icon{
-position: absolute;
-height: 90.7px;
-width: 90.7px;
-top: -45px;
-right: 30%;
-left: 30%;
-}
-.text-titulo {
-font-size: 10pt;
-display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
-line-clamp: 2;
-overflow: hidden;
-text-align: center;
+
+.iconS{
+  position: absolute;
+  height: 90.7px;
+  width: 90.7px;
+  top: -45px;
+  right: 30%;
+  left: 30%;
 }
 
-.text-descripcion {
-display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 4;
-line-clamp: 3;
-overflow: hidden;
-text-align: center;
+.text-tituloS {
+  font-size: 10pt;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  text-align: center;
+}
+
+.text-descripcionS {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  text-align: center;
 }
 </style>
