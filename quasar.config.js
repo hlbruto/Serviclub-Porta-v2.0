@@ -120,7 +120,8 @@ module.exports = configure(function (/* ctx */) {
         'Loading',
         'Notify',
         'LocalStorage',
-        'Dark'
+        'Dark',
+        'Dialog'
        ]
     },
 

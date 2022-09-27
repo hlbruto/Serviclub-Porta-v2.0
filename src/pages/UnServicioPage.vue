@@ -18,16 +18,16 @@
               <div>
                 <q-img
                   class="icon2"
-                  :src="'portada/' + store.unServicio.attributes.foto"
+                  :src="'portada/' + store.servicio.attributes.foto"
                 />
                 <q-item-label class="text-h5 q-mb-md text-center">
-                  {{ store.unServicio.attributes.servicio }}
+                  {{ store.servicio.attributes.servicio }}
                 </q-item-label>
                 <q-item-label class="text-body2">
-                  {{ store.unServicio.attributes.descripcion }}
+                  {{ store.servicio.attributes.descripcion }}
                 </q-item-label>
                 <q-item-label class="text-body1" style="margin-top:30px">
-                  <strong>Precio:</strong> {{ store.unServicio.attributes.Precio }}
+                  <strong>Precio:</strong> {{ store.servicio.attributes.Precio }}
                 </q-item-label>
               </div>
             </q-card-section>

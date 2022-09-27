@@ -4,19 +4,15 @@ import { api } from 'src/boot/axios'
 export const useServiciosStore = defineStore('servicios', {
   state: () => ({
     servicios: [],
-    servCasa: [],
-    servRed: [],
-    servInst: [],
+    serviciosCasa: [],
+    serviciosRed: [],
+    serviciosInstalacion: [],
     servicio: {},
-    sigServicio: {}
+    siguienteServicio: {}
   }),
 
   getters: {
-    serviciosCasa: (state) => state.servCasa,
-    serviciosRed: (state) => state.servRed,
-    serviciosInstalacion: (state) => state.servInst,
-    unServicio: (state) => state.servicio,
-    siguienteServicio: (state) => state.sigServicio
+    /* serviciosCasa: (state) => state.servCasa */
   },
 
   actions: {
@@ -44,9 +40,9 @@ export const useServiciosStore = defineStore('servicios', {
           element3.push(this.servicios[index])
         }
       }
-      this.servCasa = element
-      this.servRed = element2
-      this.servInst = element3
+      this.serviciosCasa = element
+      this.serviciosRed = element2
+      this.serviciosInstalacion = element3
     },
 
     irAlServicio (id) {
@@ -55,14 +51,14 @@ export const useServiciosStore = defineStore('servicios', {
           this.servicio = this.servicios[index]
         }
       }
-    },
+    }
 
-    otroServicio (id) {
+    /* otroServicio (id) {
       for (let index = 0; index < this.servicios.length; index++) {
         if (this.servicios[index].id === id) {
           this.sigServicio = this.servicios[index + 1]
         }
       }
-    }
+    } */
   }
 })

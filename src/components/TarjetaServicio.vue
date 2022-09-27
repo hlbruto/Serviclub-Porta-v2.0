@@ -44,6 +44,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
+import { useQuasar } from 'quasar'
 import { useServiciosStore } from 'stores/servicios-store'
 import { useRouter } from 'vue-router'
 
@@ -70,12 +71,14 @@ const props = defineProps({
   }
 })
 
+const $q = useQuasar()
 const store = useServiciosStore()
 const router = useRouter()
 
 async function elegirServicio () {
   await store.irAlServicio(props.id)
   console.log('func', props.id)
+  $q.localStorage.set('servicio', store.servicio)
   router.push({ path: 'servicio/' + props.id })
 }
 </script>
