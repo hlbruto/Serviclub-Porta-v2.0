@@ -1,5 +1,11 @@
 <template>
   <q-page class="q-pa-sm">
+    <div>
+      <small class="q-mt-sm q-mr-sm row justify-end text-grey-7">
+        {{ formattedString }}
+      </small>
+    </div>
+
     <div class="row q-col-gutter-sm">
       <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
         <q-card bordered flat>
@@ -23,42 +29,37 @@
 
               <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input dense v-model="user_details.user_name" label="Usuario"/>
+                  <q-input dense v-model="user.username" label="Usuario"/>
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input dense v-model="user_details.email" label="Correo electrónico"/>
+                  <q-input dense v-model="user.email" label="Correo electrónico"/>
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input dense v-model="user_details.first_name" label="Nombre(s)"/>
+                  <q-input dense v-model="firstName" label="Nombre(s)"/>
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input dense v-model="user_details.last_name" label="Apellidos"/>
+                  <q-input dense v-model="lastName" label="Apellidos"/>
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input autogrow dense v-model="user_details.address" label="Dirección"/>
+                  <q-input autogrow dense v-model="user.address" label="Dirección"/>
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input dense v-model="user_details.city" label="Municipio"/>
+                  <q-input dense v-model="user.city" label="Municipio"/>
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-input dense v-model="user_details.post_code" label="Provincia"/>
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input type="textarea" dense v-model="user_details.about" label="Escriba algo sobre ud."/>
+                  <q-input dense v-model="postCode" label="Provincia"/>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -75,8 +76,8 @@
             <q-avatar size="100px" class="shadow-10">
               <img src="avatar.jpg">
             </q-avatar>
-            <div class="text-subtitle2 q-mt-lg">pratik@cubava.cu</div>
-            <div class="text-h6 q-mt-md">Pratik Patel</div>
+            <div class="text-subtitle2 q-mt-lg">{{ user.email }}</div>
+            <div class="text-h6 q-mt-md">{{ user.username }}</div>
           </q-card-section>
           <q-card-section>
             <q-item>
@@ -91,9 +92,7 @@
 
           <q-card-section>
             <div class="text-body2 text-justify">
-              My name is Pratik Patel (also known as @pratik227). I noticed myself pulling into programming since 2013,
-              and then determined myself to become a skilled and knowledgeable programmer. My passion for my programming
-              increases as I started working for Incentius (where I am currently working in).
+              {{ user.address }} - {{ user.city }}
             </div>
           </q-card-section>
         </q-card>
@@ -113,7 +112,7 @@
             <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
               <q-item-section>
                 <q-input type="password" dense outlined round
-                         v-model="password_dict.current_password"
+                         v-model="oldPass"
                          label="Contraseña Anterior"/>
               </q-item-section>
             </q-item>
@@ -124,7 +123,7 @@
             </q-item>
             <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
               <q-item-section>
-                <q-input type="password" dense outlined round v-model="password_dict.new_password"
+                <q-input type="password" dense outlined round v-model="newPass"
                          label="Nueva Contraseña"/>
               </q-item-section>
             </q-item>
@@ -136,7 +135,7 @@
             <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
               <q-item-section>
                 <q-input type="password" dense outlined round
-                         v-model="password_dict.confirm_new_password"
+                         v-model="ConfPass"
                          label="Confirme Nueva Contraseña"/>
               </q-item-section>
             </q-item>
@@ -144,24 +143,42 @@
           <q-card-actions align="right">
             <q-btn class="text-capitalize bg-primary text-white">Cambiar contraseña</q-btn>
           </q-card-actions>
-
         </q-card>
       </div>
     </div>
+
+    <!-- place QPageScroller at end of page -->
+    <q-page-scroller
+      position="bottom-right"
+      :scroll-offset="150"
+      :offset="[18, 18]"
+    >
+      <q-btn fab icon="keyboard_arrow_up" color="black" />
+    </q-page-scroller>
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { ref, onBeforeMount } from 'vue'
+import { date, useQuasar } from 'quasar'
+// import { api } from 'src/boot/axios'
 
-export default defineComponent({
-  name: 'UserProfile',
-  setup () {
-    return {
-      user_details: {},
-      password_dict: {}
-    }
-  }
+const timeStamp = Date.now()
+const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD | HH:mm')
+
+const $q = useQuasar()
+
+const user = ref(null)
+const firstName = ref('')
+const lastName = ref('')
+const postCode = ref('')
+const oldPass = ref('')
+const newPass = ref('')
+const ConfPass = ref('')
+
+onBeforeMount(() => {
+  user.value = $q.localStorage.getItem('user')
+  console.log('us', user.value)
 })
 </script>
 

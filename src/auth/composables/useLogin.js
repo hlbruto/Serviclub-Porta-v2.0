@@ -1,12 +1,13 @@
-import { useRouter } from 'vue-router'
 import { useIdentityPasswordLogin, useAuthState } from '@vueauth/core'
-import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { api } from 'src/boot/axios'
+import { useRouter } from 'vue-router'
+import { useUsuariosStore } from 'stores/usuarios-store'
 
 export default () => {
-  const router = useRouter()
   const $q = useQuasar()
+  const router = useRouter()
+  const storeUsuarios = useUsuariosStore()
   const {
     form,
     loading,
@@ -20,7 +21,6 @@ export default () => {
     resetErrors
   } = useIdentityPasswordLogin()
   const { user } = useAuthState()
-  const authorization = ref(null)
 
   async function onLoginClicked () {
     resetErrors()
@@ -38,26 +38,26 @@ export default () => {
     console.log(data)
 
     $q.localStorage.set('jwt', data.jwt) // para guardar el token
+    storeUsuarios.token = data.jwt
 
-    authorization.value = {
+    storeUsuarios.authorization = {
       headers: {
         Authorization: `Bearer ${data.jwt}`
       }
     }
-    $q.localStorage.set('authorization', authorization.value) // para guardar la cabecera
-
+    $q.localStorage.set('authorization', storeUsuarios.authorization) // para guardar la cabecera
     llenarDatosUser()
   }
 
   async function llenarDatosUser () {
     try {
       await api
-        .get('/api/users/me?populate=*', authorization.value)
+        .get('/api/users/me?populate=*', storeUsuarios.authorization)
         .then((res) => {
+          storeUsuarios.user = res.data
           $q.localStorage.set('user', res.data)
-          $q.localStorage.set('role', res.data.role.name)
-
-          console.log('pop', res.data)
+          storeUsuarios.role = res.data.role.name
+          storeUsuarios.logueado = true
           router.push({ path: 'dashboard' })
         })
     } catch (error) {

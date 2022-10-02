@@ -1,5 +1,11 @@
 <template>
   <q-page class="q-pa-sm">
+    <div>
+      <small class="q-mt-sm q-mr-sm row justify-end text-grey-7">
+        {{ formattedString }}
+      </small>
+    </div>
+
     <q-card class="q-mt-sm">
       <q-card-section class="text-h6 q-pb-none">
         <q-item>
@@ -30,12 +36,12 @@
             <q-td :props="props">
               <q-item>
                 <q-item-section>
-                  <q-item-label>{{ props.row.name }}</q-item-label>
+                  <q-item-label>{{ props.row.attributes.instalacion.attributes.nombre }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-td>
           </template>
-          <template v-slot:body-cell-Servicio="props">
+          <!-- <template v-slot:body-cell-Servicio="props">
             <q-td :props="props">
               <q-item>
                 <q-item-section>
@@ -61,14 +67,35 @@
                 </q-item-section>
               </q-item>
             </q-td>
-          </template>
+          </template> -->
         </q-table>
       </q-card-section>
     </q-card>
+
+    <!-- place QPageScroller at end of page -->
+    <q-page-scroller
+      position="bottom-right"
+      :scroll-offset="150"
+      :offset="[18, 18]"
+    >
+      <q-btn fab icon="keyboard_arrow_up" color="black" />
+    </q-page-scroller>
   </q-page>
 </template>
 
 <script setup>
+import { onBeforeMount } from 'vue'
+import { date, useQuasar } from 'quasar'
+import { usePedidosStore } from 'stores/pedidos-store'
+import { useUsuariosStore } from 'stores/usuarios-store'
+
+const timeStamp = Date.now()
+const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD | HH:mm')
+
+const $q = useQuasar()
+const storePedidos = usePedidosStore()
+const storeUsuarios = useUsuariosStore()
+
 const salesData = [
   {
     name: 'Henry Luis Pérez Vázquez',
@@ -137,6 +164,13 @@ const salesColumn = [
     classes: 'text-bold'
   }
 ]
+
+onBeforeMount(() => {
+  storeUsuarios.authorization = $q.localStorage.getItem('authorization')
+  storeUsuarios.user = $q.localStorage.getItem('user')
+  storeUsuarios.logueado = true
+  storePedidos.listarPedidos()
+})
 
 function getColor (val) {
   if (val > 70 && val <= 100) {

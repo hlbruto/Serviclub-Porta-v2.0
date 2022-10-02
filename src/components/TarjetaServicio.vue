@@ -9,10 +9,7 @@
       />
     </q-card-section>
     <q-card-section>
-      <div class="text-h6 q-pb-sm text-primary text-tituloS" v-if="color == 'primary'">
-        {{ props.servicio }}
-      </div>
-      <div class="text-h6 q-pb-sm text-dark text-tituloS" v-else>
+      <div class="text-h6 q-pb-sm text-tituloS">
         {{ props.servicio }}
       </div>
       <div class="text-body2 text-descripcionS">
@@ -22,19 +19,9 @@
     <q-card-actions vertical>
       <q-btn
         no-caps
-        class="text-white text-body1 q-px-lg bg-dark"
-        flat
-        @click="elegirServicio()"
-        v-if="color == 'primary'"
-      >
-        Solicitar
-      </q-btn>
-      <q-btn
-        no-caps
         class="text-white text-body1 q-px-lg bg-primary"
         flat
         @click="elegirServicio()"
-        v-else
       >
         Solicitar
       </q-btn>

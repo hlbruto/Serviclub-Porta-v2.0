@@ -49,10 +49,10 @@
             to="/servicios"
           />
 
-          <q-btn round icon="person" color="primary" dense>
+          <q-btn round icon="person" color="primary" dense v-if="storeUsuarios.logueado == true">
             <q-menu auto-close
-                    transition-show="scale"
-                    transition-hide="scale"
+              transition-show="scale"
+              transition-hide="scale"
             >
               <q-list>
                 <q-item><ToggleDarkMode /></q-item>
@@ -86,7 +86,7 @@
             </q-menu>
           </q-btn>
 
-          <q-btn round icon="login" color="primary" dense to="/login" />
+          <q-btn round icon="login" color="primary" dense to="/login" v-if="storeUsuarios.logueado == false" />
         </q-toolbar>
       </q-header>
 
@@ -123,12 +123,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useQuasar } from 'quasar'
+import { useUsuariosStore } from 'stores/usuarios-store'
 import ToggleDarkMode from 'src/components/ToggleDarkMode.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import AuthLogoutItem from 'src/auth/components/AccountMenu/LogoutItem.vue'
 
-const $q = useQuasar()
+const storeUsuarios = useUsuariosStore()
 
 const essentialLinks = [
   {

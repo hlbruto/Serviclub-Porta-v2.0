@@ -5,6 +5,10 @@
       style="height: calc(80vh - 50px) !important"
       src="~assets/hero01.jpg"
     >
+      <template v-slot:loading>
+        <q-spinner-gears color="white" />
+      </template>
+
       <div class="absolute-full flex flex-center">
         <div class="col flex flex-center">
           <div class="text-h2 text-white text-bold q-pb-lg">

@@ -60,6 +60,7 @@
             :done="step > 1"
             :header-nav="step > 1"
           >
+          <div v-if="storeUsuarios.logueado == true">
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item>
@@ -82,10 +83,21 @@
             </div>
 
             <q-stepper-navigation>
-              <q-btn rounded @click="() => { done1 = true; step = 2 }"
-                class="float-right q-mr-md q-mb-md" color="blue"
-                label="Siguiente" />
+              <q-btn rounded @click="() => { step = 2 }"
+                class="float-right q-mr-md q-mb-sm" color="blue"
+                label="Siguiente" :disable="(momento == '' || problema == '')"/>
             </q-stepper-navigation>
+            </div>
+
+            <div v-else class="text-negative text-center row justify-center">
+              <q-item-label class="col-12">
+                Debe estar autenticado para solicitar el Servicio
+              </q-item-label>
+              <q-btn rounded to="/login" color="blue"
+                class="q-mt-lg q-mb-md col-3"
+                label="Autenticarse"
+              />
+            </div>
           </q-step>
 
           <q-step
@@ -96,65 +108,112 @@
             :header-nav="step > 2"
           >
             <div class="text-caption text-grey-7">
-              Seleccione la instalación que desea le ofrezca el Servicio:
+              Instalación que le ofrecerá el Servicio:
             </div>
 
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item>
-                  <q-select dense outlined class="full-width"
-                    v-model="provincia"
-                    label="Provincia*" :options="options"
+                  <q-input
+                    dense autogrow outlined
+                    label="Instalación*"
+                    v-model="instalacion.attributes.nombre"
+                    disable
+                    type="text"
+                    class="full-width"
+                    v-if="instalacion !== null"
+                  />
+                  <q-input
+                    dense autogrow outlined
+                    label="Instalación*"
+                    v-model="instalacion"
+                    disable
+                    type="text"
+                    class="full-width"
+                    v-else
                   />
                 </q-item>
               </div>
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="col-12">
                 <q-item>
-                  <q-select dense outlined class="full-width"
-                    v-model="provincia"
-                    label="Municipio*" :options="options"
-                  />
+                  <q-item-label> Seleccione la instalación que desea
+                    <q-btn
+                      color="grey"
+                      round
+                      flat
+                      dense
+                      :icon="otra ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+                      @click="otra = !otra"
+                    />
+                  </q-item-label>
                 </q-item>
               </div>
-              <div class="col-12 q-pa-lg">
-                <q-table
-                  :rows="rows"
-                  :columns="columns"
-                  row-key="name"
-                  selection="single"
-                  v-model:selected="selected"
-                  grid
-                  hide-header
-                >
-                  <template v-slot:item="props">
-                    <div
-                      class="q-pa-xs q-mr-md col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition text-center"
-                      :style="props.selected ? 'transform: scale(0.95);' : ''"
-                    >
-                      <q-card bordered :class="props.selected ? 'instCard' : ''">
-                        <q-card-section>
-                          <q-icon size="xl" name="mdi-home-automation" />
-                          <div class="text-caption text-bold">
-                            Instalacion II
-                          </div>
-                          <div class="text-caption">
-                            Calle Maceo #2 % Calle 1 y Calle 3
-                          </div>
-                          <q-checkbox dense v-model="props.selected" />
-                        </q-card-section>
-                      </q-card>
+
+                  <q-slide-transition>
+                    <div v-show="otra">
+                      <q-separator class="q-mt-md q-mb-md" />
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                          <q-item>
+                            <q-select dense outlined class="full-width"
+                              v-model="provincia"
+                              label="Provincia*" :options="options"
+                            />
+                          </q-item>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                          <q-item>
+                            <q-select dense outlined class="full-width"
+                              v-model="provincia"
+                              label="Municipio*" :options="options"
+                            />
+                          </q-item>
+                        </div>
+                        <div class="col-12 q-pa-lg">
+                          <q-table
+                            :rows="storeInstalaciones.instalaciones"
+                            :columns="columns"
+                            row-key="name"
+                            selection="single"
+                            v-model="selected"
+                            grid
+                            hide-header
+                          >
+                            <template v-slot:item="props">
+                              <div
+                                class="q-pa-xs q-mr-md col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition text-center"
+                                :style="props.selected ? 'transform: scale(0.95);' : ''"
+                              >
+                                <q-card bordered class="cardInst" @click="elegirInstalacion(props.row)">
+                                  <q-card-section>
+                                    <q-icon size="xl" name="mdi-home-automation" />
+                                    <div class="text-caption text-bold">
+                                      {{ props.row.attributes.nombre }}
+                                    </div>
+                                    <div class="text-caption">
+                                      {{ props.row.attributes.direccion }}
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </template>
+                            <template v-slot:bottom>
+                            </template>
+                          </q-table>
+                        </div>
+                      </div>
                     </div>
-                  </template>
-                  <template v-slot:bottom>
-                  </template>
-                </q-table>
-              </div>
+                  </q-slide-transition>
             </div>
 
             <q-stepper-navigation>
-              <q-btn rounded @click="() => { done2 = true; step = 3 }" class="float-right q-mr-md q-mb-md" color="blue"
-                label="Siguiente"/>
-              <q-btn flat @click="step = 1" color="primary" rounded label="Atrás" class="q-mr-sm float-right"/>
+              <q-btn rounded @click="() => { step = 3, modificarFavorita()}"
+                class="float-right q-mr-md q-mb-md" color="blue"
+                label="Siguiente" :disable="instalacion === null"
+              />
+              <q-btn flat @click="step = 1" color="primary" rounded
+                label="Atrás" class="q-mr-sm float-right"
+              />
             </q-stepper-navigation>
           </q-step>
 
@@ -172,7 +231,9 @@
                     <q-item-label lines="1">
                       {{ store.servicio.attributes.servicio }}
                     </q-item-label>
-                    <q-item-label caption>Solicitado a: Florencia II</q-item-label>
+                    <q-item-label caption>
+                      Solicitado a: {{ instalacion.attributes.nombre }}
+                    </q-item-label>
                   </q-item-section>
                   <q-item-section side>
                     {{ store.servicio.attributes.precio }}
@@ -192,7 +253,7 @@
 
             <q-card class="rounded-borders">
               <q-card-section horizontal>
-                <q-card-section class="col-xs-12 col-sm-12 col-md-6 col-lg-8 q-pt-xs">
+                <q-card-section class="col-xs-12 col-sm-12 col-md-5 col-lg-8 q-pt-xs">
                   <div class="text-h6 text-center">Problemática:</div>
                   <div class="text-subtitle2">
                     Momento:
@@ -250,7 +311,7 @@
 
         <q-card-actions align="right">
           <q-btn push dense label="No" color="negative" v-close-popup />
-          <q-btn push dense label="Sí" color="primary" to="/dashboard" @click="confirm = false" />
+          <q-btn push dense label="Sí" color="primary" @click="realizarPedido()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -269,19 +330,26 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { date, useQuasar } from 'quasar'
+import { api } from 'src/boot/axios'
+import { useRouter } from 'vue-router'
+import { useUsuariosStore } from 'stores/usuarios-store'
 import { useServiciosStore } from 'stores/servicios-store'
-// import { useRouter } from 'vue-router'
+import { useInstalacionesStore } from 'stores/instalaciones-store'
 
 const timeStamp = Date.now()
 const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD | HH:mm')
 
 const $q = useQuasar()
-// const router = useRouter()
+const router = useRouter()
+const storeUsuarios = useUsuariosStore()
 const store = useServiciosStore()
+const storeInstalaciones = useInstalacionesStore()
 
 const step = ref(1)
 const momento = ref('')
 const problema = ref('')
+const instalacion = ref(null)
+const otra = ref(false)
 const provincia = ref(null)
 const selected = ref([])
 const confirm = ref(false)
@@ -309,51 +377,98 @@ const options = [
 
 const columns = [
   {
-    name: 'name',
+    name: 'nombre',
     required: true,
     label: 'Dessert (100g serving)',
     align: 'left',
-    field: row => row.name,
+    field: row => row.nombre,
     format: val => `${val}`,
     sortable: true
   },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true }
-]
-
-const rows = [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  }
+  { name: 'direccion', align: 'center', label: 'Calories', field: 'direccion', sortable: true }
 ]
 
 onBeforeMount(() => {
-  if (store.servicio.attributes === undefined) {
+  storeUsuarios.authorization = $q.localStorage.getItem('authorization')
+  if (!store.servicio.attributes) {
     store.servicio = $q.localStorage.getItem('servicio')
-    console.log('store', store.servicio)
   }
+  if (!storeUsuarios.user.id) {
+    storeUsuarios.user = $q.localStorage.getItem('user')
+    storeInstalaciones.instalacionFavorita.id = storeUsuarios.user.instalacionFavorita.id
+    storeInstalaciones.instalacionFavorita.attributes.nombre = storeUsuarios.user.instalacionFavorita.nombre
+    storeInstalaciones.instalacionFavorita.attributes.direccion = storeUsuarios.user.instalacionFavorita.direccion
+    storeUsuarios.logueado = true
+  }
+  if (!storeInstalaciones.instalacionFavorita.id) {
+    otra.value = true
+  } else {
+    instalacion.value = storeInstalaciones.instalacionFavorita
+  }
+  storeInstalaciones.listarInstalaciones()
 })
+
+function elegirInstalacion (inst) {
+  storeInstalaciones.instalacionFavorita = inst
+  instalacion.value = inst
+  otra.value = !otra.value
+}
+
+async function modificarFavorita () {
+  const data = {
+    instalacionFavorita: instalacion.value.id
+  }
+  try {
+    await api.put('/api/users/' + storeUsuarios.user.id, data, storeUsuarios.authorization).then((res) => {
+      console.log('res.data', res.data)
+    })
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Ha ocurrido un error. Revise su conexión.'
+    })
+  }
+}
+
+async function realizarPedido () {
+  confirm.value = false
+  const a = {
+    data: {
+      momento: momento.value,
+      problema: problema.value,
+      estado: 'Pendiente de pago',
+      instalacion: instalacion.value.id,
+      servicio: store.servicio.id,
+      user: storeUsuarios.user.id
+    }
+  }
+  try {
+    await api
+      .post('/api/pedidos', a, storeUsuarios.authorization)
+      .then((res) => {
+        $q.notify({
+          type: 'info',
+          message: 'El pedido se guardó correctamente.'
+        })
+        router.push({ path: '/dashboard' })
+      })
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Ha ocurrido un error. Revise su conexión.'
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.icon2{
+.icon2 {
   height: 30.7px;
   width: 30.7px;
+}
+
+.cardInst:hover {
+  border-color: #0a0349;
+  border-width: 0.5pt;
 }
 </style>

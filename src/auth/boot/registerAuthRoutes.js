@@ -11,11 +11,14 @@ export default boot(({ router }) => {
       // { path: 'servicio/:id', component: () => import('pages/UnServicioPage.vue') },
       { path: 'dashboard', component: () => import('pages/UserDashboard.vue') },
       { path: 'servicio/:id', component: () => import('pages/CheckoutServicio.vue') },
-      { path: 'perfil', component: () => import('src/pages/UserProfile.vue') }
+      { path: 'perfil', component: () => import('src/pages/UserProfile.vue') },
+      {
+        path: '/login', component: () => import('src/auth/pages/IdentityPasswordLoginPage.vue')
+      }
     ]
   })
 
-  router.addRoute('/', {
+  /* router.addRoute('/', {
     name: 'auth.login',
     path: '/',
     meta: { unauthOnly: true },
@@ -25,5 +28,5 @@ export default boot(({ router }) => {
         path: '/login', component: () => import('src/auth/pages/IdentityPasswordLoginPage.vue')
       }
     ]
-  })
+  }) */
 })
