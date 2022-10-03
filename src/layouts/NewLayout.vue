@@ -29,6 +29,7 @@
             <img
               src="nuestro-logo.png"
               style="height: 30px; margin-right: 5px"
+              v-if="$q.platform.is.desktop"
             />
             <div class="text-h5">ServiClub</div>
           </div>
@@ -40,6 +41,7 @@
             label="Inicio"
             flat
             to="/inicio"
+            v-if="$q.platform.is.desktop"
           />
 
           <q-btn
@@ -47,6 +49,7 @@
             label="Servicios"
             flat
             to="/servicios"
+            v-if="$q.platform.is.desktop"
           />
 
           <q-btn round icon="person" color="primary" dense v-if="storeUsuarios.logueado == true">
@@ -93,7 +96,7 @@
       <q-drawer
         v-model="leftDrawerOpen"
         show-if-above
-        behavior="desktop"
+        behavior="mobile"
         bordered
         :width="200"
         :breakpoint="500"

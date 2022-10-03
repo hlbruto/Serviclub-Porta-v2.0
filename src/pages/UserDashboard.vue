@@ -8,21 +8,21 @@
 
     <q-card class="q-mt-sm">
       <q-card-section class="text-h6 q-pb-none">
-        <q-item>
-          <q-item-section avatar class="">
+        <q-item class="row">
+          <q-item-section avatar class="col-md-1 col-lg-1">
             <q-icon color="blue" name="mdi-cart" size="44px"/>
           </q-item-section>
 
-          <q-item-section>
+          <q-item-section class="col-md-8 col-lg-8">
             <q-item-label>
               <div class="text-h6">Mis Pedidos</div>
             </q-item-label>
-            <q-item-label caption class="text-black">
+            <q-item-label caption class="text-black" v-if="$q.platform.is.desktop">
               Monitoree los servicios que ud. ha solicitado. Observe su estado aquí.
             </q-item-label>
           </q-item-section>
 
-          <q-item-section avatar>
+          <q-item-section avatar class="col-md-3 col-lg-3">
             <q-item-label>
               <div class="text-body1">Saldo de su cuenta JC:</div>
             </q-item-label>
@@ -31,30 +31,37 @@
         </q-item>
       </q-card-section>
       <q-card-section class="q-pa-none q-ma-none">
-        <q-table class="no-shadow no-border" :rows="salesData" :columns="salesColumn" hide-bottom>
-          <template v-slot:body-cell-Products="props">
+        <q-table class="no-shadow no-border" :rows="storePedidos.pedidos" :columns="salesColumn" hide-bottom>
+          <template v-slot:body-cell-Name="props">
             <q-td :props="props">
               <q-item>
                 <q-item-section>
-                  <q-item-label>{{ props.row.attributes.instalacion.attributes.nombre }}</q-item-label>
+                  <q-item-label>Sin asignar</q-item-label>
                 </q-item-section>
               </q-item>
             </q-td>
           </template>
-          <!-- <template v-slot:body-cell-Servicio="props">
+          <template v-slot:body-cell-Servicio="props">
             <q-td :props="props">
               <q-item>
                 <q-item-section>
-                  <q-item-label>{{ props.row.servicio }}</q-item-label>
-                  <q-item-label caption class="">Fecha pedido: <br/>{{ props.row.date }}</q-item-label>
+                  <q-item-label>
+                    {{ props.row.attributes.servicio.data.attributes.servicio }}
+                  </q-item-label>
+                  <q-item-label caption>Fecha pedido: <br/>
+                    {{ props.row.attributes.createdAt }}
+                  </q-item-label>
                 </q-item-section>
               </q-item>
             </q-td>
           </template>
-          <template v-slot:body-cell-Status="props">
-            <q-td :props="props" class="text-left">
-              <q-chip class="text-white text-capitalize" :label="props.row.status"
-                      :color="getChipColor(props.row.status)"></q-chip>
+          <template v-slot:body-cell-Precio="props">
+            <q-td :props="props">
+              <q-item>
+                <q-item-section>
+                  <q-item-label>{{ props.row.attributes.servicio.data.attributes.precio }}</q-item-label>
+                </q-item-section>
+              </q-item>
             </q-td>
           </template>
           <template v-slot:body-cell-Progress="props">
@@ -62,12 +69,18 @@
               <q-item>
                 <q-item-section>
                   <q-item-label caption class="">
-                    <q-linear-progress dark :color="getColor(props.row.Progress)" :value="props.row.Progress / 100"/>
+                    <q-linear-progress dark :color="getColor(props.row.attributes.progress)" :value="props.row.attributes.progress / 100"/>
                   </q-item-label>
                 </q-item-section>
               </q-item>
             </q-td>
-          </template> -->
+          </template>
+          <template v-slot:body-cell-Status="props">
+            <q-td :props="props" class="text-left">
+              <q-chip class="text-white text-capitalize" :label="props.row.attributes.estado"
+                      :color="getChipColor(props.row.attributes.estado)"></q-chip>
+            </q-td>
+          </template>
         </q-table>
       </q-card-section>
     </q-card>
@@ -96,7 +109,7 @@ const $q = useQuasar()
 const storePedidos = usePedidosStore()
 const storeUsuarios = useUsuariosStore()
 
-const salesData = [
+/* const salesData = [
   {
     name: 'Henry Luis Pérez Vázquez',
     Progress: 70,
@@ -129,7 +142,7 @@ const salesData = [
     total: '$50,00',
     date: '19 Sept 2020'
   }
-]
+] */
 const salesColumn = [
   {
     name: 'Name',
@@ -140,9 +153,9 @@ const salesColumn = [
   },
   { name: 'Servicio', label: 'Servicio', field: 'servicio', sortable: true, align: 'left' },
   {
-    name: 'Total',
+    name: 'Precio',
     label: 'Precio',
-    field: 'total',
+    field: 'precio',
     sortable: true,
     align: 'left',
     classes: 'text-bold'
