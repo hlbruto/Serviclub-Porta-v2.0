@@ -349,6 +349,7 @@ const step = ref(1)
 const momento = ref('')
 const problema = ref('')
 const instalacion = ref(null)
+const instalacionInicial = ref(null)
 const otra = ref(false)
 const provincia = ref(null)
 const selected = ref([])
@@ -404,29 +405,35 @@ onBeforeMount(() => {
     otra.value = true
   } else {
     instalacion.value = storeInstalaciones.instalacionFavorita
+    instalacionInicial.value = storeInstalaciones.instalacionFavorita
   }
   storeInstalaciones.listarInstalaciones()
 })
 
 function elegirInstalacion (inst) {
-  storeInstalaciones.instalacionFavorita = inst
-  instalacion.value = inst
-  otra.value = !otra.value
+  if (storeInstalaciones.instalacionFavorita !== inst) {
+    storeInstalaciones.instalacionFavorita = inst
+    instalacion.value = inst
+    otra.value = !otra.value
+  }
 }
 
 async function modificarFavorita () {
-  const data = {
-    instalacionFavorita: instalacion.value.id
-  }
-  try {
-    await api.put('/api/users/' + storeUsuarios.user.id, data, storeUsuarios.authorization).then((res) => {
-      console.log('res.data', res.data)
-    })
-  } catch (error) {
-    $q.notify({
-      type: 'negative',
-      message: 'Ha ocurrido un error. Revise su conexión.'
-    })
+  if (instalacion.value !== instalacionInicial.value) {
+    const data = {
+      instalacionFavorita: instalacion.value.id
+    }
+    try {
+      await api.put('/api/users/' + storeUsuarios.user.id, data, storeUsuarios.authorization).then((res) => {
+        console.log('res.data', res.data)
+        instalacionInicial.value = instalacion.value
+      })
+    } catch (error) {
+      $q.notify({
+        type: 'negative',
+        message: 'Ha ocurrido un error. Revise su conexión.'
+      })
+    }
   }
 }
 
